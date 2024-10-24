@@ -1,0 +1,11 @@
+ DATA WEI  1.00e+00
+ DIV  WEI  1.00e+02 | smoothing divergence factor
+ ROT  WEI  4.30e+00 | smoothing curl factor
+ UV   WEI  1.50e+00 | velocity smoothing factor
+ Harm Ro-> 1.50e+00 | obs. radius in harm weighting
+ Data SW-> 0000     | switch XY-variable data weighting
+ ITER---> 09900   |  max iterations
+ IPRINT-> 00500   |  print discretization
+ IHESS-->  0000   |  Hessian output (1/0)
+ NOISE--> 0.3    |  noise level in data
+ 
