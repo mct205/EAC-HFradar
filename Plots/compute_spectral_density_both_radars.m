@@ -1,6 +1,6 @@
 clear;
 %% Read NEWC radar data 
-datDir = 'DATA/radar-data';
+datDir = '../DATA/radar-data';
 datIn1  = fullfile( datDir, ...
     "TUV_NEWC_20171101T000000Z_20240101T000000Z_2dVar_1-hour-avg.nc" );
 
@@ -33,7 +33,7 @@ u2 = ncread( datIn2, 'UCUR' );
 v2 = ncread( datIn2, 'VCUR' );
 
 %% Load mooring data 
-load('aux_data/Mooring-data/CH100_uv.mat','tM','uM','vM');
+load('../DATA/aux_data/Mooring-data/CH100_uv.mat','tM','uM','vM');
 %% Cut data 
 tStart1 = datenum(2019,09,01);
 tEnd1 = datenum(2021,09,01);

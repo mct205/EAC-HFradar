@@ -1,6 +1,6 @@
 clear;
 %% Read NEWC radar data 
-datDir = 'DATA/radar-data';
+datDir = '../DATA/radar-data';
 datIn1  = fullfile( datDir, ...
     "TUV_NEWC_20171101T000000Z_20240101T000000Z_2dVar_1-hour-avg.nc" );
 
@@ -20,7 +20,7 @@ maskNEWC = nan(size(glon1)); % Masking grid with data
 indnotnan = find( ~isnan(u1(:,:,40656)) );
 maskNEWC(indnotnan) = 1;
 %% Read COF radar data 
-datDir = 'radar-data';
+datDir = '../DATA/radar-data';
 datIn2  = fullfile( datDir, ...
     "TUV_COF_20120101T003000Z_20240201T003000Z_2dVar_1-hour-avg.nc" );
 

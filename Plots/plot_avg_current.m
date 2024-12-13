@@ -1,6 +1,6 @@
 clear;
 %% Read NEWC radar data 
-datDir = 'DATA/radar-data';
+datDir = '../DATA/radar-data';
 datIn1  = fullfile( datDir, ...
     "TUV_NEWC_20171101T000000Z_20240101T000000Z_2dVar_1-hour-avg.nc" );
 
@@ -20,7 +20,7 @@ maskNEWC = nan(size(glon1)); % Masking grid with data
 indnotnan = find( ~isnan(u1(:,:,40656)) );
 maskNEWC(indnotnan) = 1;
 %% Read COF radar data 
-datDir = 'radar-data';
+datDir = '../DATA/radar-data';
 datIn2  = fullfile( datDir, ...
     "TUV_COF_20120101T003000Z_20240201T003000Z_2dVar_1-hour-avg.nc" );
 
@@ -156,9 +156,9 @@ end
 
 %% Now for plot 
 % Aux data for plot
-load("aux_data/EAC_bathy.mat")
-load("aux_data/EAC_coastline.mat")
-load("aux_data/EAC_radarstations.mat")
+load("../DATA/aux_data/EAC_bathy.mat")
+load("../DATA/aux_data/EAC_coastline.mat")
+load("../DATA/aux_data/EAC_radarstations.mat")
 
 % For both sites
 LonLims = [150.5 154.3];
@@ -175,7 +175,7 @@ LatLims2 = [-31.2 -29.8];
 %% For plotting monthly NEWC
 m_proj('lambert','lon',LonLims1,'lat',LatLims1);
 
-vecScl = 12.5;
+vecScl = 8.5;
 vecHeadangle=50;
 vecShaftwidth=0.025;
 vecHeadwidth=0.25;
@@ -183,9 +183,9 @@ vecHeadlength=0.33;
 dx = 1;
 
 % For Ellipses
-dEll = 2;
+dEll = 3;
 
-ellScl = 25000;
+ellScl = 42000;
 
 % For plotting NEWC
 h=figure(2);clf;hold on;
@@ -194,7 +194,42 @@ tiledlayout(3,4,"TileSpacing","compact");
 
 % Plot radar vel 
 for indPlot=1:12
-    nexttile;hold on;
+    
+    switch indPlot
+        % Austral summer 
+        case 12
+            figPos = 1;
+        case 1 
+            figPos = 5;
+        case 2
+            figPos = 9;
+
+        % Austral autumn 
+        case 3 
+            figPos = 2;
+        case 4 
+            figPos = 6;
+        case 5 
+            figPos = 10;
+
+        % Austral winter 
+        case 6 
+            figPos = 3;
+        case 7 
+            figPos = 7;
+        case 8 
+            figPos = 11;
+
+        % Austral spring 
+        case 9 
+            figPos = 4;
+        case 10 
+            figPos = 8;
+        case 11 
+            figPos = 12;
+
+    end
+    ax=nexttile(figPos);hold on;
     % Bathy lines 
     [C,h] = m_contour(xbath,ybath,zbath,[-100 -200 -1000 -2000 -3000 -4000],...
         'ShowText','off','Color',[.6 .6 .6]);
@@ -224,13 +259,13 @@ for indPlot=1:12
     for iii=1:length(zr12)
         [ll1,ll2] = m_ellipse(xre2(iii),yre2(iii),90-zr32(iii),zr12(iii),zr22(iii),100,ellScl);
 
-        a = m_plot(ll1,ll2,'Color',[0.87,0.53,0.29],'LineWidth',1.5);
+        a = m_plot(ll1,ll2,'Color',[234 95 148]/256,'LineWidth',2);
         a.Color(4) = [0.65];
     end
 
     % For plotting scale ellipse 
     [ll1,ll2] = m_ellipse(152.73,-33.44,90-0,0.25,0.1,100,ellScl);
-    m_plot(ll1,ll2,'Color',[0.87,0.53,0.29],'LineWidth',2.0);
+    m_plot(ll1,ll2,'Color',[234 95 148]/256,'LineWidth',2.0);
     m_text(152.55,-33.52,'0.25 m^2 s^-^2');
     
     % m_plot(xy(:,1),xy(:,2),'k','LineWidth',1.3);
@@ -252,20 +287,25 @@ for indPlot=1:12
         'rs','MarkerSize',11,'MarkerFaceColor','r');
 end
 
+% Set title 
+ax=nexttile(1);title('Austral summer','FontSize',17);
+ax=nexttile(2);title('Austral autumn','FontSize',17);
+ax=nexttile(3);title('Austral winter','FontSize',17);
+ax=nexttile(4);title('Austral spring','FontSize',17);
 %% For plotting monthly COF
 m_proj('lambert','lon',LonLims2,'lat',LatLims2);
 
-vecScl = 12.5;
+vecScl = 10.5;
 vecHeadangle=50;
 vecShaftwidth=0.025;
 vecHeadwidth=0.25;
 vecHeadlength=0.33;
-dx = 3;
+dx = 4;
 
 % For Ellipses
-dEll = 6;
+dEll = 9;
 
-ellScl = 25000;
+ellScl = 40000;
 
 % For plotting COF
 h=figure(3);clf;hold on;
@@ -274,7 +314,42 @@ tiledlayout(3,4,"TileSpacing","compact");
 
 % Plot radar vel 
 for indPlot=1:12
-    nexttile;hold on;
+    
+    switch indPlot
+        % Austral summer 
+        case 12
+            figPos = 1;
+        case 1 
+            figPos = 5;
+        case 2
+            figPos = 9;
+
+        % Austral autumn 
+        case 3 
+            figPos = 2;
+        case 4 
+            figPos = 6;
+        case 5 
+            figPos = 10;
+
+        % Austral winter 
+        case 6 
+            figPos = 3;
+        case 7 
+            figPos = 7;
+        case 8 
+            figPos = 11;
+
+        % Austral spring 
+        case 9 
+            figPos = 4;
+        case 10 
+            figPos = 8;
+        case 11 
+            figPos = 12;
+
+    end
+    ax=nexttile(figPos);hold on;
     % Bathy lines 
     [C,h] = m_contour(xbath,ybath,zbath,[-100 -200 -1000 -2000 -3000 -4000],...
         'ShowText','off','Color',[.6 .6 .6]);
@@ -304,13 +379,13 @@ for indPlot=1:12
     for iii=1:length(zr12)
         [ll1,ll2] = m_ellipse(xre2(iii),yre2(iii),90-zr32(iii),zr12(iii),zr22(iii),100,ellScl);
 
-        a = m_plot(ll1,ll2,'Color',[0.87,0.53,0.29],'LineWidth',1.5);
+        a = m_plot(ll1,ll2,'Color',[234 95 148]/256,'LineWidth',1.5);
         a.Color(4) = [0.65];
     end
 
     % For plotting scale ellipse 
     [ll1,ll2] = m_ellipse(153.90,-31.0,90-0,0.25,0.1,100,ellScl);
-    m_plot(ll1,ll2,'Color',[0.87,0.53,0.29],'LineWidth',2.0);
+    m_plot(ll1,ll2,'Color',[234 95 148]/256,'LineWidth',2.0);
     m_text(153.68,-31.08,'0.25 m^2 s^-^2');
 %
     % m_plot(xy(:,1),xy(:,2),'k','LineWidth',1.3);
@@ -332,6 +407,11 @@ for indPlot=1:12
         'rs','MarkerSize',11,'MarkerFaceColor','r');
 end
 
+% Set title 
+ax=nexttile(1);title('Austral summer','FontSize',17);
+ax=nexttile(2);title('Austral autumn','FontSize',17);
+ax=nexttile(3);title('Austral winter','FontSize',17);
+ax=nexttile(4);title('Austral spring','FontSize',17);
 %% Now computing domain averaged current velocity
 u1mean = squeeze( nanmean(nanmean(u1.*maskNEWC,2),1)) ;
 v1mean = squeeze( nanmean(nanmean(v1.*maskNEWC,2),1));
@@ -478,16 +558,16 @@ end
 %% For plotting mean current vel
 m_proj('lambert','lon',LonLims,'lat',LatLims);
 
-vecScl = 3;
+vecScl = 2.5;
 vecHeadangle=60;
 vecShaftwidth=0.055;
 vecHeadwidth=0.55;
 vecHeadlength=0.73;
-ellScl = 25000;
+ellScl = 35000;
 
 % For plotting COF
 h=figure(5);clf;hold on;
-set(h, 'Position',[867 256 375 401]);
+set(h, 'Position',[661 155 467 511]);
 
 % Bathy lines 
 [C,h] = m_contour(xbath,ybath,zbath,[-100 -200 -1000 -2000 -3000 -4000],...
@@ -519,9 +599,10 @@ zr22= reshape(fmin1total(1:dEll:end,1:dEll:end),numel(glon1(1:dEll:end,1:dEll:en
 zr32= reshape(finc1total(1:dEll:end,1:dEll:end),numel(glon1(1:dEll:end,1:dEll:end)),1);
 
 for iii=1:length(zr12)
-    [ll1,ll2] = m_ellipse(xre2(iii),yre2(iii),90-zr32(iii),zr12(iii),zr22(iii),100,ellScl);
+    [ll1,ll2] = m_ellipse(xre2(iii),yre2(iii),90-zr32(iii),...
+        zr12(iii),zr22(iii),100,ellScl);
 
-    a = m_plot(ll1,ll2,'Color',[0.87,0.53,0.29],'LineWidth',1.5);
+    a = m_plot(ll1,ll2,'Color',[0.87,0.53,0.29],'LineWidth',1.3);
     a.Color(4) = [0.65];
 end
 
@@ -541,7 +622,7 @@ m_vec( vecScl*2,xr,yr,uPlot,vPlot,sqrt( uPlot.^2 + vPlot.^2 ),...
 
 % Ellipses
 % COF
-dEll = 6;
+dEll = 8;
 xre2 = reshape(glon2(1:dEll:end,1:dEll:end),numel(glon2(1:dEll:end,1:dEll:end)),1);
 yre2 = reshape(glat2(1:dEll:end,1:dEll:end),numel(glon2(1:dEll:end,1:dEll:end)),1);
 zr12= reshape(fmaj2total(1:dEll:end,1:dEll:end),numel(glon2(1:dEll:end,1:dEll:end)),1);
@@ -549,16 +630,17 @@ zr22= reshape(fmin2total(1:dEll:end,1:dEll:end),numel(glon2(1:dEll:end,1:dEll:en
 zr32= reshape(finc2total(1:dEll:end,1:dEll:end),numel(glon2(1:dEll:end,1:dEll:end)),1);
 
 for iii=1:length(zr12)
-    [ll1,ll2] = m_ellipse(xre2(iii),yre2(iii),90-zr32(iii),zr12(iii),zr22(iii),100,ellScl);
+    [ll1,ll2] = m_ellipse(xre2(iii),yre2(iii),90-zr32(iii), ...
+        zr12(iii),zr22(iii),100,ellScl);
 
-    a = m_plot(ll1,ll2,'Color',[0.87,0.53,0.29],'LineWidth',1.5);
+    a = m_plot(ll1,ll2,'Color',[0.87,0.53,0.29],'LineWidth',1.3);
     a.Color(4) = [0.65];
 end
 
 % For plotting scale ellipse 
 [ll1,ll2] = m_ellipse(150.90,-31.0,90-0,0.25,0.1,100,ellScl);
 m_plot(ll1,ll2,'Color',[0.87,0.53,0.29],'LineWidth',2.0);
-m_text(150.68,-31.08,'0.25 m^2 s^-^2');
+m_text(150.68,-31.18,'0.25 m^2 s^-^2');
 %
 % m_plot(xy(:,1),xy(:,2),'k','LineWidth',1.3);
 
@@ -577,21 +659,24 @@ m_plot(sites(4).SiteOrigin(2),sites(4).SiteOrigin(1), ...
 
 %% Location 
 ll1 = [-33.856765, 151.229640]; % Sydney
-ll2 = [-32.932508, 151.768599]; % New Castle
+ll2 = [-32.4132,   152.3170  ]; % Newcastle radar site 
 ll3 = [-32.706386, 152.125112]; % Nelson Bay
 ll4 = [-34.429123, 150.909155]; % Wollongong
 ll5 = [-31.467922, 152.901629]; % Port Macquarie
 ll6 = [-31.879287, 152.686935]; % Harrington
 ll7 = [-30.655346, 153.046770]; % Nambucca Heads
-ll8 = [-30.288152, 153.143107]; % Coffs Harbour 
-m_text(ll1(2)-0.68,ll1(1),'Sydney','Color','k','FontWeight','bold','FontSize',12);
-m_text(ll2(2)-1.08,ll2(1),'New Castle','Color','k','FontWeight','bold','FontSize',12);
-m_text(ll3(2)-0.90,ll3(1),'Nelson Bay','Color','k');
-% m_text(ll4(2)-0.75,ll4(1),'Wollongong','Color','k');
-m_text(ll5(2)-0.95,ll5(1),'Port Macquarie','Color','k');
-% m_text(ll6(2)-0.70,ll6(1),'Harrington','Color','k');
-% m_text(ll7(2)-1.10,ll7(1),'Nambucca Heads','Color','k');
-m_text(ll8(2)-0.85,ll8(1),'Coffs Harbour','Color','k');
+ll8 = [-30.288152, 153.143107]; % Coffs Harbour radar site
+m_text(ll1(2)-0.68,ll1(1),sprintf('Sydney'),'Color','k', ...
+    'FontWeight','bold','FontSize',12);
+m_text(ll2(2)-1.08,ll2(1),sprintf('Newcastle \n  (NEWC)'),'Color', ...
+    'k','FontWeight','bold','FontSize',12);
+m_text(ll3(2)-0.90,ll3(1),sprintf('Nelson Bay'),'Color','k');
+% m_text(ll4(2)-0.75,ll4(1),sprintf('Wollongong'),'Color','k');
+m_text(ll5(2)-0.95,ll5(1),sprintf('Port Macquarie'),'Color','k');
+% m_text(ll6(2)-0.70,ll6(1),sprintf('Harrington'),'Color','k');
+% m_text(ll7(2)-1.10,ll7(1),sprintf('Nambucca Heads'),'Color','k');
+m_text(ll8(2)-0.85,ll8(1),sprintf('Coffs Habour \n       (COF)'), ...
+    'Color','k','FontWeight','bold');
 
 %% Function 
 % PCA the vel 

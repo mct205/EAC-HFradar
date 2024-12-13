@@ -5,7 +5,7 @@
 clear;
 
 %% Read COF radar data 
-datDir = 'DATA/radar-data';
+datDir = '../DATA/radar-data';
 datIn  = fullfile( datDir, ...
     "TUV_COF_20120101T003000Z_20240201T003000Z_2dVar_1-hour-avg.nc" );
 
@@ -36,9 +36,9 @@ while tax(end) < t(end)
 end
 %% Plot one vel filed for test 
 % Aux data for plot
-load("aux_data/EAC_bathy.mat")
-load("aux_data/EAC_coastline.mat")
-load("aux_data/EAC_radarstations.mat")
+load("../DATA/aux_data/EAC_bathy.mat")
+load("../DATA/aux_data/EAC_coastline.mat")
+load("../DATA/aux_data/EAC_radarstations.mat")
 
 % For COF
 LonLims = [152.9 154.2];
@@ -92,7 +92,7 @@ if ~load_data_flag
             func_get_core_vel_eac(glon',glat',Utmp,Vtmp,1.5,30,nbJetAx,4);
     end
 else
-    load('DATA/processed-data/EAC_core.mat');
+    load('../DATA/processed-data/EAC_core.mat');
 end
 
 %% Plot radar vel 

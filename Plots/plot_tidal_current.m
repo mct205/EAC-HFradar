@@ -1,6 +1,7 @@
+%% Require to run the script get_tidal_analysis_Utide.m first!! 
 clear;
 %% Load data
-load(['DATA/processed-data/' ...
+load(['../DATA/processed-data/' ...
     'Tidal_utide_20200101_20210101.mat']);
 %% 
 tidalMethod = 'utide';
@@ -41,10 +42,10 @@ ye1 = [-32.9132, -33.0556, -33.1882];
 xe2 = [153.3282, 153.5728, 153.7828];
 ye2 = [-30.2354, -30.2858, -30.3711];
 %%
-load('aux_data/EAC_coastline.mat');
-load('aux_data/EAC_bathy.mat');
+load('../DATA/aux_data/EAC_coastline.mat');
+load('../DATA/aux_data/EAC_bathy.mat');
 % load radar site locations 
-load aux_data/EAC_radarstations.mat
+load ../DATA/aux_data/EAC_radarstations.mat
 
 ch70_pos = [153.30 -30.2758];
 ch100_pos= [153.3978 -30.2688];
@@ -569,38 +570,6 @@ m_plot(sites(4).SiteOrigin(2),sites(4).SiteOrigin(1), ...
 
 m_grid('GridLineStyle','none');
 title([conLists(4,:)]);
-
-%% Interpolate to points 
-for ind=1:length(xe1)
-    d = deg2km(sqrt( (xe1(ind) - glon1).^2 + (ye1(ind) - glat1).^2 ));
-    [ii1(ind),jj1(ind)] = find(d == min(min(d)));
-end
-
-for ind=1:length(xe2)
-    d = deg2km(sqrt( (xe2(ind) - glon2).^2 + (ye2(ind) - glat2).^2 ));
-    [ii2(ind),jj2(ind)] = find(d == min(min(d)));
-end
-
-%% Plot time series 
-% h=figure(4);clf;
-% for ind=1:length(xe1)
-%     subplot(length(xe1),2,2*ind-1);hold on;
-%     plot( t1, squeeze( u1Cut(ii1(ind),jj1(ind), :) ) );
-%     plot( t1, squeeze( real( tt1.xout(ii1(ind),jj1(ind), :) ) ) );
-%     subplot(length(xe1),2,2*ind);hold on;
-%     plot( t1, squeeze( v1Cut(ii1(ind),jj1(ind), :) ) );
-%     plot( t1, squeeze( imag(tt1.xout(ii1(ind),jj1(ind), :)) ) );
-% end
-% %
-% h=figure(5);clf;
-% for ind=1:length(xe2)
-%     subplot(length(xe2),2,2*ind-1);hold on;
-%     plot( t2, squeeze( u2Cut(ii2(ind),jj2(ind), :) ) );
-%     plot( t2, squeeze( real( tt2.xout(ii2(ind),jj2(ind), :) ) ) );
-%     subplot(length(xe2),2,2*ind);hold on;
-%     plot( t2, squeeze( v2Cut(ii2(ind),jj2(ind), :) ) );
-%     plot( t2, squeeze( imag(tt2.xout(ii2(ind),jj2(ind), :)) ) );
-% end
 
 %%
 function [fmaj,fmin,fpha,finc] = get_tidal_val(tt,const,tidalMethod,nx,ny)
